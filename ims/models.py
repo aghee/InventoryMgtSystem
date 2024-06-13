@@ -5,7 +5,7 @@ from django.core.validators import MaxValueValidator,MinValueValidator
 
 # Create your models here.
 class Profile(models.Model):
-    user_id=models.OneToOneField(User,on_delete=models.CASCADE,primary_key=True)
+    user=models.OneToOneField(User,on_delete=models.CASCADE,primary_key=True) #user_id
     first_name=models.CharField(max_length=50)
     last_name=models.CharField(max_length=50)
     email=models.EmailField(max_length=50,null=True,blank=True)
@@ -24,11 +24,11 @@ class Product(models.Model):
     categories=models.ManyToManyField(Category,through="ProductCategory")
 
 class ProductCategory(models.Model):
-    product_id=models.ForeignKey(Product,on_delete=models.CASCADE)
-    category_id=models.ForeignKey(Category,on_delete=models.CASCADE)
+    product=models.ForeignKey(Product,on_delete=models.CASCADE) #product_id
+    category=models.ForeignKey(Category,on_delete=models.CASCADE) #category_id
 
 class Stock(models.Model):
-    product_id=models.OneToOneField(Product,on_delete=models.CASCADE,primary_key=True)
+    product=models.OneToOneField(Product,on_delete=models.CASCADE,primary_key=True) #product_id
     quantity=models.IntegerField(validators=[MinValueValidator(0)])
     reorder_level=models.IntegerField(validators=[MinValueValidator(0)])
 
@@ -38,7 +38,7 @@ class Order(models.Model):
         ("delivered","delivered"),
         ("cancelled","cancelled"),
     )
-    user_id=models.ForeignKey(User,on_delete=models.CASCADE,related_name="created_by")
+    user=models.ForeignKey(User,on_delete=models.CASCADE,related_name="created_by") #user_id
     status=models.CharField(max_length=50,choices=STATUS)
     created=models.DateTimeField(auto_now_add=True)
     updated=models.DateTimeField(auto_now=True)
@@ -46,10 +46,10 @@ class Order(models.Model):
     products=models.ManyToManyField(Product,through="OrderProduct")
 
 class OrderProduct(models.Model):
-    order_id=models.ForeignKey(Order,on_delete=models.CASCADE)
-    product_id=models.ForeignKey(Product,on_delete=models.CASCADE)
+    order=models.ForeignKey(Order,on_delete=models.CASCADE) #order_id
+    product=models.ForeignKey(Product,on_delete=models.CASCADE) #product_id
     quantity=models.IntegerField(validators=[MinValueValidator(0)])
 
 class Notification(models.Model):
-    stock_id=models.ForeignKey(Stock,on_delete=models.CASCADE)
+    stock=models.ForeignKey(Stock,on_delete=models.CASCADE) #stock_id
     message=models.CharField(max_length=250)
