@@ -1,0 +1,30 @@
+{% extends "ims/base.html" %}
+
+
+{% block content %}
+
+<div class="container">
+    <div class="card bg-light mb-3" style="max-width: 40rem;">
+    <div class="card-header">Product Removal</div>
+    <div class="card-body">
+        <h4 class="card-title">Confirm delete</h4>
+        <form method="POST" action="">
+            {% csrf_token %}
+            <p> Are you sure you want to delete <b>{{ prod_to_delete }}</b> ?</p><br>
+            <h2>Product Details</h2>
+            <li>Name : {{ prod_to_delete.name }}</li>
+            <li>Category : {{ prod_to_delete.prodcateg }}</li>
+            <li>Supplier : {{ prod_to_delete.supplier }}</li>
+            <li>Price : {{ prod_to_delete.price }}</li>
+            <li>Quantity-Instock : {{ prod_to_delete.quantity }}</li>
+            <button type="submit" class="btn btn-warning">
+                <a href="{{ request.META.HTTP_REFERER|default:'/' }}" style="text-decoration: none; color: black;">Cancel</a>
+              </button> 
+              <button type="submit" class="btn btn-danger">Confirm</button>
+        </form>
+    </div>
+</div>
+</div>
+
+{% endblock %}
+  

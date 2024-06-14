@@ -1,0 +1,28 @@
+{% extends 'ims/base.html' %}
+
+{% block content %}
+
+<h1>THIS IS THE HOME PAGE</h1>
+
+<div>
+    <table>
+        <thead>
+            <tr>
+                <th>Product Name</th>
+            </tr>
+        </thead>
+       
+    {% for product in products %}
+    <tr>
+        <td>{{ product.name }}</td>
+<td><a href="{% url 'product-detail' product.id %}">View</a></td>
+<td><a href="{% url 'create-product' %}">Add</a></td>
+<td><a href="{% url 'update-product' product.id %}">Update</a></td>
+<td><a href="{% url 'delete-product' product.id %}">Delete</a></td>
+</tr>
+
+{% endfor %}
+</table>
+</div>
+
+{% endblock %}

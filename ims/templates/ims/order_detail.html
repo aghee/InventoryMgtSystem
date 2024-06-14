@@ -1,0 +1,53 @@
+{% extends "ims/base.html" %}
+
+{% block content %}
+
+<a href="{% url 'home' %}">Go back</a>
+
+<div class="container">
+    <div class="table-responsive my-3">
+        <table class="table table-bordered">
+            <thead class="thead-light">
+                <tr>
+                    <th>Product</th>
+                    <th>Supplier</th>
+                    <th>Quantity</th>
+                    <th>Order Status</th>
+                    <th>Ordered By</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <dt>
+                        <dd>{{ object.product.name }}</dd>
+                        </dt>
+                    </td>
+                    <td>
+                        <dt>
+                        <dd>{{ object.supplier }}</dd>
+                        </dt>
+                    </td>
+                    <td>
+                        <dt>
+                        <dd>{{ object.quantity }}</dd>
+                        </dt>
+                    </td>
+                    <td>
+                        <dt>
+                        <dd>{{ object.status }}</dd>
+                        </dt>
+                    </td>
+                    <td>
+                        <dt>
+                        <dd>{{ object.user }}</dd>
+                        </dt>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+{% endblock %}
