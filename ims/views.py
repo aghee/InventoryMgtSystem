@@ -1,12 +1,14 @@
 from django.shortcuts import render,redirect
 from .models import Product,Order
-from .forms import ProductForm,OrderForm
+from .forms import ProductForm,OrderForm,ContactUsForm
 from django.views.generic.detail import DetailView
 from django.contrib.auth import authenticate, login,logout
 from django.contrib import messages
 # from django.contrib.auth.models import User
 # from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 # Create your views here.
@@ -49,7 +51,7 @@ def logoutUser(request):
     logout(request)
     return redirect("login")
 
-
+@login_required(login_url="login")
 def home(request):
     products=Product.objects.all()
     context={
@@ -57,10 +59,12 @@ def home(request):
     }
     return render(request,"ims/home.html",context)
 
-class ProductDetail(DetailView):
+
+class ProductDetail(LoginRequiredMixin,DetailView):
     model=Product
     template_name="ims/prod_detail.html"
 
+@login_required(login_url="login")
 def createProduct(request):
     form=ProductForm()
     if request.method =="POST":
@@ -74,6 +78,7 @@ def createProduct(request):
     }
     return render(request,"ims/product.html",context)
 
+@login_required(login_url="login")
 def updateProduct(request,pk):
     prod_to_update=Product.objects.get(id=pk)
     form=ProductForm(instance=prod_to_update)
@@ -87,6 +92,7 @@ def updateProduct(request,pk):
     }
     return render(request,"ims/product.html",context)
 
+@login_required(login_url="login")
 def deleteProduct(request,pk):
     prod_to_delete=Product.objects.get(id=pk)
     if request.method =="POST":
@@ -97,6 +103,7 @@ def deleteProduct(request,pk):
     }
     return render(request,"ims/deleteprod.html",context)
 
+@login_required(login_url="login")
 def specific_order(request,pk):
     # all_orders=Order.objects.all()
     one_order=Order.objects.get(id=pk)
@@ -105,6 +112,7 @@ def specific_order(request,pk):
     }
     return render(request,"ims/orders.html",context)
 
+@login_required(login_url="login")
 def createOrder(request):
     form=OrderForm()
     if request.method =="POST":
@@ -117,6 +125,7 @@ def createOrder(request):
     }
     return render(request,"ims/neworder.html",context)
 
+@login_required(login_url="login")
 def updateOrder(request,pk):
     order_to_update=Order.objects.get(id=pk)
     form=OrderForm(instance=order_to_update)
@@ -130,10 +139,11 @@ def updateOrder(request,pk):
     }
     return render(request,"ims/neworder.html",context)
 
-class OrderDetail(DetailView):
+class OrderDetail(LoginRequiredMixin,DetailView):
     model=Order
     template_name="ims/order_detail.html"
 
+@login_required(login_url="login")
 def deleteOrder(request,pk):
     order_to_delete=Order.objects.get(id=pk)
     if request.method =="POST":
@@ -144,3 +154,18 @@ def deleteOrder(request,pk):
         "order_to_delete":order_to_delete
     }
     return render(request,"ims/deleteorder.html",context)
+
+def contactUs(request):
+    form=ContactUsForm()
+    if request.method =="POST":
+        form=ContactUsForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("login")
+    context={
+        "form":form
+    }
+    return render(request,"ims/contactus.html",context)
+
+def aboutUs(request):
+    return render(request,"ims/about.html",{})
