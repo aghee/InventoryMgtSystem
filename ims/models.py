@@ -86,4 +86,12 @@ class Notification(models.Model):
     
     def __str__(self):
         return self.message[:30]
-    
+
+class ContactUs(models.Model):
+    name=models.CharField(max_length=50,verbose_name="Supplier Name")
+    phone_number=PhoneNumberField(unique=True,max_length=15,verbose_name="Phone Number")
+    email=models.EmailField(max_length=50,null=True,blank=True,verbose_name="Email address")
+    product=models.CharField(max_length=1000,verbose_name="Goods to Supply")
+    deliverytime=models.IntegerField(validators=[MinValueValidator(0)],verbose_name="Delivery Timeframe(In days)",default=0)
+    accepted_payment=models.CharField(max_length=50,verbose_name="Payment method accepted")
+    location=models.CharField(max_length=50,verbose_name="Location")
