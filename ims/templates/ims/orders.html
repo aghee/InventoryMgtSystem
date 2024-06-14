@@ -1,0 +1,52 @@
+{% extends 'ims/base.html' %}
+
+{% block content %}
+
+<div class="container my-3">
+    <div class="row">
+        <div class="col-8">
+            <div class="d-grid gap-5">
+                <button class="btn btn-lg btn-primary w-100 mb-3" type="button">
+                    <a href="{% url 'create-order' %}" style="text-decoration: none; color: black;">Place New Order</a>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container my-3">
+    <div class="row">
+        <div class="col-8">
+            <div class="d-grid gap-5">
+               
+                <button class="btn btn-lg btn-secondary w-100 mb-3" type="button">
+                    <a href="{% url 'update-order' oneorder.id %}" style="text-decoration: none; color: black;">Update Existing Order</a>
+                    </button>
+              
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container my-3">
+    <div class="row">
+        <div class="col-8">
+            <div class="d-grid gap-5">
+                <button class="btn btn-lg btn-info w-100 mb-3" type="button">
+                    <a href="{% url 'order-detail' oneorder.id %}" style="text-decoration: none; color: black;">View Detailed Order</a>
+                   </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container my-3">
+    <div class="row">
+        <div class="col-8">
+            <div class="d-grid gap-5">
+                <button class="btn btn-lg btn-danger w-100 mb-3" type="button">
+                    <a href="{% url 'delete-order' oneorder.id %}" style="text-decoration: none; color: black;">Delete Order</a>
+                    </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

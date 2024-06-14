@@ -36,7 +36,7 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
-
+    
 class ProductCategory(models.Model):
     product=models.ForeignKey(Product,on_delete=models.CASCADE) #product_id
     category=models.ForeignKey(Category,on_delete=models.CASCADE) #category_id
@@ -65,6 +65,8 @@ class Order(models.Model):
     created=models.DateTimeField(auto_now_add=True)
     updated=models.DateTimeField(auto_now=True)
     approved_by=models.ForeignKey(User,on_delete=models.SET_NULL,null=True,blank=True,related_name="approved_orders",verbose_name="Approved By")
+    supplier=models.CharField(max_length=50,verbose_name="Supplier Name",default="Kings Suppliers")
+    quantity=models.IntegerField(validators=[MinValueValidator(0)],verbose_name="Quantity-In-Stock",default=0)
     products=models.ManyToManyField(Product,through="OrderProduct")
 
     class Meta:

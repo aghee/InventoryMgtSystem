@@ -1,0 +1,17 @@
+{% extends "ims/base.html" %}
+
+{% block content %}
+<div class="container my-3">
+    <div class="card bg-light mb-6" style="max-width: 60rem;">
+        <div class="card-header">User Registration</div>
+        <div class="card-body">
+            <form method="POST" action="" novalidate>
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input class="btn btn-primary" type="submit" value="Register">
+            </form>
+            <p>Already signed up?</p><a class="btn btn-info" href="{% url 'login' %}">Login</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
